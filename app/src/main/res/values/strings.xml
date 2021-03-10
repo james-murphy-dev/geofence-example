@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Geofence Example</string>
+    <string name="base_url">https://www.randomtext.me/api/gibberish/p–2/12–16/</string>
+    <string name="geofence_transition_invalid_type">Geofence transition invalid type</string>
+</resources>
