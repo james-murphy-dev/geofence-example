@@ -46,17 +46,11 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     triggeringGeofences
             );
 
-            // Send notification and log the transition details.
-            sendNotification(geofenceTransitionDetails);
             Log.i(TAG, geofenceTransitionDetails);
         } else {
             // Log the error.
             Log.e(TAG, context.getString(R.string.geofence_transition_invalid_type));
         }
-    }
-
-    private void sendNotification(String notification){
-
     }
 
     private String getGeofenceTransitionDetails(
