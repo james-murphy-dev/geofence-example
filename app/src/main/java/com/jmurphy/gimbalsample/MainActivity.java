@@ -10,7 +10,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,6 +24,10 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.jmurphy.gimbalsample.network.ApiFactory;
+import com.jmurphy.gimbalsample.network.ApiService;
+import com.jmurphy.gimbalsample.network.GeofenceBroadcastReceiver;
+import com.jmurphy.gimbalsample.network.Response;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,8 +38,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class MainActivity extends AppCompatActivity {
 

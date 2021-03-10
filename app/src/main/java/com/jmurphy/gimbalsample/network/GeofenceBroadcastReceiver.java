@@ -1,4 +1,4 @@
-package com.jmurphy.gimbalsample;
+package com.jmurphy.gimbalsample.network;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
+import com.jmurphy.gimbalsample.R;
 
 import java.util.ArrayList;
 import java.util.List;

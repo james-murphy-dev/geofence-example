@@ -1,6 +1,4 @@
-package com.jmurphy.gimbalsample;
-
-import java.util.List;
+package com.jmurphy.gimbalsample.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
