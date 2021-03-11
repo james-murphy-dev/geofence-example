@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
+import com.jmurphy.gimbalsample.ObservableObject;
 import com.jmurphy.gimbalsample.R;
 
 import java.util.ArrayList;
@@ -33,8 +34,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
         // Test that the reported transition was of interest.
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
-                geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
 
             // Get the geofences that were triggered. A single event can trigger
             // multiple geofences.
@@ -46,6 +46,8 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     geofenceTransition,
                     triggeringGeofences
             );
+
+            ObservableObject.getInstance().updateValue(intent);
 
             Log.i(TAG, geofenceTransitionDetails);
         } else {

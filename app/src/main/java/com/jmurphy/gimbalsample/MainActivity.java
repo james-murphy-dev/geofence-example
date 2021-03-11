@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -35,11 +36,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer {
 
     private static final String TAG = MainActivity.class.getName();
     private static final float GEOFENCE_RADIUS_IN_METERS = 50;
@@ -100,27 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Geofences added
-
-
-                        apiService.getMessage().enqueue(new Callback<Response>() {
-                            @Override
-                            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-
-                                if (response.body() != null){
-
-                                    String res = response.body().text_out;
-
-                                    Document doc = Jsoup.parse(res);
-                                    Elements ps = doc.select("p");
-                                    message.setText(ps.text());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Response> call, Throwable t) {
-                                Log.e(TAG, t.getMessage());
-                            }
-                        });
+                        Log.i(TAG, "Geofence added");
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
@@ -130,6 +113,32 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, e.getMessage());
                     }
                 });
+
+        ObservableObject.getInstance().addObserver(this);
+
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        apiService.getMessage().enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+
+                if (response.body() != null){
+
+                    String res = response.body().text_out;
+
+                    Document doc = Jsoup.parse(res);
+                    Elements ps = doc.select("p");
+                    message.setText(ps.text());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 
     private PendingIntent getGeofencePendingIntent() {
@@ -142,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         // calling addGeofences() and removeGeofences().
         geofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
+
         return geofencePendingIntent;
     }
 
